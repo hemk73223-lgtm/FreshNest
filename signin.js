@@ -149,7 +149,7 @@
 
       const phoneNumber = state.countryCode + phoneDigits;
 
-auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+firebase.auth().signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
 .then((confirmationResult) => {
 
     window.confirmationResult = confirmationResult;
