@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Warehouse Management System — Admin Dashboard</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<!-- Fonts: Space Grotesk (display/numerals), Inter (body), JetBrains Mono (data readouts) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="topbar">
+  <div class="topbar-left ">
+    <button class="icon-btn brand-mark" id="sidebarToggle" aria-label="Open sidebar">
+      <i class="fa-solid fa-warehouse"></i>
+    </button>
+    <div class="brand">
+      
+      <span class="brand-name">FreshNest WAREHOUSE</span>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <!-- Dashboard utility strip: live date, live time, online status -->
+    <div class="dash-utility" id="dashUtility">
+      <div class="utility-item" id="liveDateItem">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span id="liveDateText">--</span>
+      </div>
+      <div class="utility-item" id="liveTimeItem">
+        <i class="fa-solid fa-clock"></i>
+        <span id="liveTimeText">--</span>
+      </div>
+      <div class="utility-item utility-status" id="onlineStatusItem">
+        <span class="status-dot" id="onlineDot"></span>
+        <span id="onlineLabel">Online</span>
+      </div>
+    </div>
+
+    <div class="notif-wrap">
+
+    <button class="icon-btn" id="notifBell" aria-label="Notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span class="badge" id="notifBadge">0</span>
+    </button>
+
+    <div class="notif-panel" id="notifPanel">
+
+        <div class="notif-panel-header">
+
+            <span>Notifications</span>
+
+            <div class="notif-panel-actions">
+
+                <button id="clearNotifs" class="text-btn">
+                    Clear All
+                </button>
+
+                <button id="closeNotifPanel"
+                        class="icon-btn icon-btn-sm">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="notif-list" id="notifList">
+
+        </div>
+
+    </div>
+
+</div>
+</header>
+
+<!-- backdrop shown behind the sidebar when it is open -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<div class="app-shell">
+
+  <!-- ============ SIDEBAR (starts fully collapsed / hidden) ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <span class="sidebar-brand"><i class="fa-solid"></i> Menu</span>
+      <button class="icon-btn icon-btn-sm" id="sidebarClose" aria-label="Close sidebar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <nav class="nav-list">
+      <button class="nav-item active" data-section="dashboard">
+        <i class="fa-solid fa-gauge-high"></i><span class="nav-label">Dashboard</span>
+      </button>
+      <button class="nav-item" data-section="add-product">
+        <i class="fa-solid fa-plus"></i><span class="nav-label">Add Product</span>
+      </button>
+      <button class="nav-item" data-section="products">
+        <i class="fa-solid fa-box-open"></i><span class="nav-label">Products</span>
+      </button>
+      <button class="nav-item" data-section="inventory">
+        <i class="fa-solid fa-boxes-stacked"></i><span class="nav-label">Inventory</span>
+      </button>
+      <button class="nav-item" data-section="expiring">
+        <i class="fa-solid fa-hourglass-half"></i><span class="nav-label">Expiring Soon</span>
+      </button>
+      <button class="nav-item" data-section="expired">
+        <i class="fa-solid fa-triangle-exclamation"></i><span class="nav-label">Expired Products</span>
+      </button>
+      <button class="nav-item" data-section="orders">
+        <i class="fa-solid fa-cart-shopping"></i><span class="nav-label">Orders</span>
+      </button>
+     <button class="nav-item" data-section="reports">
+    <i class="fa-solid fa-chart-column"></i>
+    <span class="nav-label">Reports</span>
+</button>
+
+<button class="nav-item" data-section="ai-anomaly">
+    <i class="fa-solid fa-brain"></i>
+    <span class="nav-label">AI Anomaly Detector</span>
+</button>
+
+<button class="nav-item" data-section="activity">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    <span class="nav-label">Activity Log</span>
+</button>
+
+<button class="nav-item" data-section="profile">
+    <i class="fa-solid fa-user-circle"></i>
+    <span class="nav-label">Admin Profile</span>
+</button>
+
+</nav>
+
+    <div class="sidebar-bottom">
+      <div class="api-status" id="apiStatus">
+        <span class="status-dot" id="apiDot"></span>
+        <span class="status-label" id="apiLabel">Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content" id="content">
+
+    <!-- ---------- DASHBOARD SECTION ---------- -->
+    <section class="view active" id="view-dashboard">
+      <div class="view-head">
+        <div>
+          <h1>Dashboard</h1>
+          <p class="view-sub">Live snapshot of stock health across the warehouse floor.</p>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <button class="stat-card no-lift" data-goto="products" id="cardTotalProducts">
+          <span class="stat-dot" id="dotTotalProducts"></span>
+          <div class="stat-icon icon-blue"><i class="fa-solid fa-boxes-packing"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Total Products</span>
+            <span class="stat-value" id="statTotalProducts">0</span>
+          </div>
+        </button>
+
+        <button class="stat-card no-lift" data-goto="expiring" id="cardExpiringSoon">
+          <div class="stat-icon icon-yellow"><i class="fa-solid fa-hourglass-half"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Expiring Soon</span>
+            <span class="stat-value" id="statExpiringSoon">0</span>
+          </div>
+        </button>
+
+        <button class="stat-card no-lift" data-goto="expired" id="cardExpiredProducts">
+          <div class="stat-icon icon-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Expired Products</span>
+            <span class="stat-value" id="statExpiredProducts">0</span>
+          </div>
+        </button>
+
+        <button class="stat-card no-lift" data-goto="lowstock" id="cardLowStock">
+    <div class="stat-icon icon-orange">
+        <i class="fa-solid fa-exclamation"></i>
+    </div>
+
+    <div class="stat-body">
+        <span class="stat-label">Low Stock</span>
+        <span class="stat-value" id="lowStockCount">0</span>
+    </div>
+</button>
+        
+
+        <button class="stat-card no-lift value-card" id="cardWarehouseValue">
+          <div class="stat-icon icon-green"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div class="stat-body">
+            <span class="stat-label value-text">Total Warehouse Value</span>
+            <span class="stat-value value-text" id="statWarehouseValue">₹0</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Row 1: Stock Distribution (top 5 products) + Ordered Products -->
+      <div class="dash-row-top">
+        <div class="panel chart-panel">
+          <h2 class="panel-title">Stock Distribution — Top 5 Products</h2>
+          <div class="chart-wrap">
+            <canvas id="stockPie" width="240" height="240"></canvas>
+            <ul class="chart-legend" id="chartLegend"></ul>
+          </div>
+        </div>
+
+       <button class="panel ordered-card-new" data-goto="orders" id="cardOrderedProducts">
+
+  <div class="ordered-top">
+    <div class="ordered-icon">
+      <i class="fa-solid fa-truck-fast"></i>
+    </div>
+    <span class="ordered-title">Ordered Products</span>
+  </div>
+
+  <div class="ordered-middle">
+    <span class="ordered-count" id="statOrderedCount">0</span>
+  </div>
+
+  <div class="ordered-bottom">
+    <span>Total units ordered</span>
+    <i class="fa-solid fa-arrow-right"></i>
+  </div>
+
+</button>
+
+      <!-- Row 2: Returned Products, full width -->
+      <button class="panel click-card returned-card-full" data-goto="returned" id="cardReturnedProducts">
+        <span class="stat-dot blue-dot" id="dotReturned"></span>
+        <div class="click-card-icon icon-navy"><i class="fa-solid fa-rotate-left"></i></div>
+        <div>
+          <h3>Returned Products</h3>
+          <p>Products sent back by customers — <span id="returnedCountInline">0</span> items logged</p>
+        </div>
+        <i class="fa-solid fa-chevron-right click-arrow"></i>
+      </button>
+    </section>
+
+    <!--- -- add product-->
+    <section class="view" id="view-add-product">
+
+    <div class="view-head with-back">
+        <div>
+            <h1>Add Product</h1>
+            <p class="view-sub">
+                Add new products into the warehouse.
+            </p>
+        </div>
+
+        <button class="back-btn" data-back="dashboard">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+        </button>
+    </div>
+
+    <div class="panel add-product-panel">
+
+    <div class="add-product-layout">
+
+        <!-- LEFT : FORM -->
+        <div class="add-product-form">
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label><i class="fa-solid fa-box"></i> Product Name</label>
+                    <input type="text" id="productName" placeholder="Enter product name">
+                </div>
+
+                <div class="field">
+                    <label><i class="fa-solid fa-tags"></i> Category</label>
+
+                    <select id="category">
+                        <option>Liquids</option>
+                        <option>Snacks</option>
+                        <option>Vegetables</option>
+                        <option>Fruits</option>
+                        <option>Bakery</option>
+                        <option>Groceries</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label><i class="fa-solid fa-indian-rupee-sign"></i> Price</label>
+                    <input type="number" id="price" placeholder="₹ 0">
+                </div>
+
+                <div class="field">
+                    <label><i class="fa-solid fa-layer-group"></i> Quantity</label>
+                    <input type="number" id="quantity" placeholder="0">
+                </div>
+
+                <div class="field">
+                    <label><i class="fa-solid fa-calendar-days"></i> Manufacturing Date</label>
+                    <input type="date" id="mfgDate">
+                </div>
+
+                <div class="field">
+                    <label><i class="fa-solid fa-hourglass-half"></i> Expiry Date</label>
+                    <input type="date" id="expiry">
+                </div>
+                <div class="field">
+
+    <label>
+        <i class="fa-solid fa-image"></i>
+        Product Image
+    </label>
+
+    <input
+        type="file"
+        id="productImage"
+        accept="image/*">
+
+</div>
+<div class="field">
+
+    <img
+        id="imagePreview"
+        src=""
+        style="
+            width:180px;
+            display:none;
+            border-radius:12px;
+            margin-top:10px;
+            border:2px solid #ddd;
+        ">
+
+</div>
+
+            </div>
+
+            <button class="btn-primary save-btn" id="saveProduct">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Add Product
+            </button>
+
+        </div>
+
+       
+
+        
+
+    </div>
+
+</div>
+
+</section>
+
+    <!-- ---------- PRODUCTS SECTION (Total Products) ---------- -->
+    <section class="view" id="view-products">
+      <div class="view-head with-back">
+        <div>
+          <h1>Total Products</h1>
+          <p class="view-sub">Browse the warehouse catalogue by category.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+
+      <div class="products-layout">
+        <div class="panel chart-panel category-chart-panel">
+          <h2 class="panel-title">Category Distribution</h2>
+          <div class="chart-wrap">
+            <canvas id="categoryPie" width="240" height="240"></canvas>
+            <ul class="chart-legend chart-legend-click" id="categoryLegend"></ul>
+          </div>
+          <p class="chart-hint"><i class="fa-solid fa-hand-pointer"></i> Click a category to see its details</p>
+        </div>
+
+        <div class="panel category-scroll-panel">
+          <h2 class="panel-title">Categories</h2>
+          <div class="category-list" id="categoryList">
+            <!-- category cards injected by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CATEGORY DETAIL SECTION (shared template) ---------- -->
+    <section class="view" id="view-categoryDetail">
+      <div class="view-head with-back">
+        <div>
+          <h1 id="categoryDetailTitle">Category</h1>
+          <p class="view-sub">Product-level breakdown for this category.</p>
+        </div>
+        <button class="back-btn" data-back="products"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+
+      <div class="top3-strip" id="categoryTop3"></div>
+
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Quantity</th><th>Price</th><th>Expiry Date</th><th>Stock Health</th></tr>
+            </thead>
+            <tbody id="categoryDetailTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- INVENTORY SECTION ---------- -->
+    <section class="view" id="view-inventory">
+      <div class="view-head with-back">
+        <div>
+          <h1>Inventory</h1>
+          <p class="view-sub">Full stock ledger across all categories.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="inventory-tools">
+
+    <div class="inventory-filters">
+        <input
+            type="text"
+            id="inventorySearch"
+            placeholder="Search product name..."
+        >
+
+        <select id="inventoryCategoryFilter">
+          <option value="all">All Categories</option>
+
+        <option value="Liquids">Liquids</option>
+
+        <option value="Vegetables">Vegetables</option>
+
+        <option value="Fruits">Fruits</option>
+
+        <option value="Groceries">Groceries</option>
+
+        <option value="Snacks">Snacks</option>
+
+        <option value="Bakery">Bakery</option>
+        </select>
+    </div>
+
+    <div class="export-actions">
+        <button id="exportExcelBtn" class="btn btn-success">
+            <i class="fa-solid fa-file-excel"></i> Export Excel
+        </button>
+
+        <button id="exportPdfBtn" class="btn btn-danger">
+            <i class="fa-solid fa-file-pdf"></i> Export PDF
+        </button>
+    </div>
+
+</div>
+
+    <div class="table-scroll">
+        <table>
+
+</div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Category</th><th>Quantity</th><th>Price</th><th>Expiry Date</th><th>Stock Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="inventoryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- ---------- EXPIRING SOON SECTION ---------- -->
+    <section class="view" id="view-expiring">
+      <div class="view-head with-back">
+        <div>
+          <h1 class="title-yellow">Expiring Soon</h1>
+          <p class="view-sub">Products nearing their expiry window — prioritize for sale or transfer.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Category</th><th>Quantity</th><th>Price</th><th>Expiry Date</th><th>Action</th></tr>
+            </thead>
+            <tbody id="expiringTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- EXPIRED SECTION ---------- -->
+    <section class="view" id="view-expired">
+      <div class="view-head with-back">
+        <div>
+          <h1 class="title-red">Expired Products</h1>
+          <p class="view-sub">Remove expired stock to keep inventory and value accurate.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Category</th><th>Quantity</th><th>Price</th><th>Action</th></tr>
+            </thead>
+            <tbody id="expiredTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-lowstock">
+
+    <div class="view-head with-back">
+        <div>
+            <h1>Low Stock Products</h1>
+            <p class="view-sub">Products with quantity between 1 and 10.</p>
+        </div>
+
+        <button class="back-btn" data-back="dashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+    </div>
+
+    <div class="panel table-panel">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lowStockTableBody"></tbody>
+
+            </table>
+        </div>
+    </div>
+
+</section>
+
+    <!-- ---------- RETURNED PRODUCTS SECTION ---------- -->
+    <section class="view" id="view-returned">
+      <div class="view-head with-back">
+        <div>
+          <h1>Returned Products</h1>
+          <p class="view-sub">Customer returns awaiting review.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Product Name</th><th>Quantity</th><th>Price</th><th>Feedback</th></tr>
+            </thead>
+            <tbody id="returnedTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- ORDERS SECTION ---------- -->
+    <section class="view" id="view-orders">
+      <div class="view-head with-back">
+        <div>
+          <h1>Ordered Products</h1>
+          <p class="view-sub">Track outbound orders and their fulfilment status.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+    <th>Username</th>
+    <th>Product</th>
+    <th>Category</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- REPORTS SECTION ---------- -->
+    <section class="view" id="view-reports">
+      <div class="view-head with-back">
+        <div>
+          <h1>Reports</h1>
+          <p class="view-sub">Summary metrics for the current warehouse cycle.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel table-panel">
+        <div class="table-scroll">
+          <table>
+            <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Username</th>
+        <th>Rating</th>
+        <th>Review</th>
+        <th>Date</th>
+    </tr>
+</thead>
+
+<tbody id="reportsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- ---------- AI ANOMALY DETECTOR SECTION ---------- -->
+
+<section class="view" id="view-ai-anomaly">
+
+    <div class="view-head with-back">
+
+        <div>
+            <h1>🤖 AI Anomaly Detector</h1>
+
+            <p class="view-sub">
+                Intelligent analysis of warehouse activity to detect unusual product behaviour.
+            </p>
+        </div>
+
+        <button class="back-btn" data-back="dashboard">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+        </button>
+
+    </div>
+
+
+    <div
+        id="aiAnomalySummary"
+        style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:16px;
+            margin-bottom:20px;
+        "
+    ></div>
+
+
+    <div
+        id="aiAnomalyResults"
+        style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:18px;
+        "
+    ></div>
+
+</section>
+
+    <section class="view" id="view-activity">
+
+    <div class="view-head with-back">
+        <div>
+            <h1>Activity Log</h1>
+            <p class="view-sub">Track all administrator activities.</p>
+        </div>
+
+        <button class="back-btn" data-back="dashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+    </div>
+
+    <div class="panel table-panel">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Action</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody id="activityTableBody">
+                    <!-- Activity logs will appear here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+    <!-- ---------- PROFILE SECTION ---------- -->
+    <section class="view" id="view-profile">
+      <div class="view-head with-back">
+        <div>
+          <h1>Admin Profile</h1>
+          <p class="view-sub">Your account details.</p>
+        </div>
+        <button class="back-btn" data-back="dashboard"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="panel profile-panel profile-panel-wide">
+        <img src="https://i.pravatar.cc/160?img=12" alt="Admin avatar" class="profile-photo" />
+        <div class="profile-fields">
+          <div class="profile-field"><span class="pf-label">Name</span><span class="pf-value">Sanjay Varma</span></div>
+          <div class="profile-field"><span class="pf-label">Email</span><span class="pf-value">sanjay.varma@warehouseops.com</span></div>
+          <div class="profile-field"><span class="pf-label">Phone</span><span class="pf-value">+91 98765 43210</span></div>
+          <div class="profile-field"><span class="pf-label">Role</span><span class="pf-value">Warehouse Admin</span></div>
+          <div class="profile-field"><span class="pf-label">Warehouse Name</span><span class="pf-value">FreshNest Warehouse</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+
+<!-- toast for simulated actions -->
+<div class="toast" id="toast"></div>
+<div id="toastContainer"></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="firebase-config.js"></script>
+<script src="products.js"></script>
+<script src="orders.js"></script>
+<script src="script.js"></script>
+<script src="admin-controller.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</body>
+</html>

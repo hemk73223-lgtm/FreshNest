@@ -1,0 +1,901 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f8f9fa;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+
+.navbar{
+    padding:15px 0;
+}
+
+.navbar-brand{
+    font-size:30px;
+}
+
+#searchBox{
+    width:300px;
+    border-radius:30px;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+
+    background: linear-gradient(135deg,#16a34a,#22c55e);
+
+    color:white;
+
+    min-height:420px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:60px 0;
+
+    border-radius:0 0 30px 30px;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.hero h1{
+
+    font-size:56px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+}
+
+.hero p{
+
+    font-size:18px;
+
+    margin:25px 0;
+
+    opacity:.95;
+
+    max-width:500px;
+
+}
+.hero img{
+
+    width:420px;
+
+    animation:float 3s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-15px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ===========================
+   CATEGORY
+=========================== */
+
+section .col{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:22px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+section .col:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ===========================
+   PRODUCT CARD
+=========================== */
+
+.product-card{
+
+    border:none;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+}
+
+.product-card img{
+
+    height:220px;
+
+    object-fit:contain;
+padding:30px;
+background:#fff;
+
+}
+
+.card-body{
+
+    text-align:center;
+
+}
+
+.card-body h5{
+
+    font-weight:bold;
+
+}
+
+.card-body button{
+
+    border-radius:30px;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+#searchBox{
+
+    width:180px;
+
+}
+
+.hero{
+
+    text-align:center;
+
+}
+
+}
+/* Product Card */
+
+.product-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.product-img{
+
+    height:220px;
+
+    object-fit:contain;
+padding:30px;
+background:#fff;
+
+}
+
+.badge{
+
+    font-size:12px;
+
+    padding:8px 10px;
+
+}
+
+.card-body h5{
+
+    min-height:48px;
+
+}
+
+.btn-success{
+
+    border-radius:12px;
+
+}
+
+.btn-outline-success{
+
+    border-radius:12px;
+
+}
+
+/* Category Section */
+
+.category-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+}
+
+.category-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 12px 30px rgba(25,135,84,.25);
+
+    background:#198754;
+
+    color:#fff;
+
+}
+
+.category-icon{
+
+    font-size:50px;
+
+    margin-bottom:15px;
+
+}
+
+.category-card h6{
+
+    font-weight:600;
+
+    margin:0;
+
+}
+.product-card{
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.15);
+
+}
+
+.product-img{
+
+    height:220px;
+
+    object-fit:contain;
+
+    padding:20px;
+
+    background:white;
+
+}
+
+.product-title{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    min-height:48px;
+
+}
+
+.discount-pill{
+
+    background:#ff5722;
+
+    color:white;
+
+    border-radius:20px;
+
+    padding:4px 12px;
+
+    display:inline-block;
+
+    margin-bottom:10px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+.new-price{
+
+    font-size:26px;
+
+    color:#198754;
+
+    font-weight:bold;
+
+}
+
+.old-price{
+
+    text-decoration:line-through;
+
+    color:#888;
+
+    margin-left:10px;
+
+}
+
+.stock-text{
+
+    display:block;
+
+    margin:10px 0;
+
+    font-weight:600;
+
+}
+
+.btn-success{
+
+    border-radius:10px;
+
+}
+
+.btn-warning{
+
+    border-radius:10px;
+
+    background:#ffc107;
+
+    border:none;
+
+    color:#000;
+
+    font-weight:600;
+
+}
+
+.btn-outline-success{
+
+    border-radius:10px;
+
+}
+.product-image-box{
+
+background:white;
+
+border-radius:25px;
+
+padding:40px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.product-image-box img{
+
+width:100%;
+
+height:420px;
+
+object-fit:contain;
+
+transition:.3s;
+
+}
+
+.product-image-box:hover img{
+
+transform:scale(1.08);
+
+}
+
+#productName{
+
+font-size:42px;
+
+font-weight:800;
+
+}
+
+.price{
+
+font-size:42px;
+
+font-weight:bold;
+
+color:#198754;
+
+}
+
+.old-price{
+
+text-decoration:line-through;
+
+color:#888;
+
+font-size:24px;
+
+margin-left:10px;
+
+}
+
+.discount{
+
+background:#ff5722;
+
+color:white;
+
+padding:6px 15px;
+
+border-radius:30px;
+
+font-weight:bold;
+
+display:inline-block;
+
+margin-bottom:20px;
+
+}
+.btn-success:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 8px 18px rgba(25,135,84,.3);
+
+transition:.3s;
+
+}
+
+.btn-warning:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 8px 18px rgba(255,193,7,.35);
+
+transition:.3s;
+
+}
+.cart-item{
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    margin-bottom:20px;
+
+    transition:.3s;
+
+}
+
+.cart-item:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+
+}
+
+.cart-image{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:contain;
+
+    border-radius:15px;
+
+    background:#fff;
+
+    padding:10px;
+
+}
+
+.quantity-btn{
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#198754;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+.remove-btn{
+
+    border:none;
+
+    background:none;
+
+    color:red;
+
+    font-weight:bold;
+
+}
+
+.sticky-top{
+
+    top:100px;
+
+}
+.btn{
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+}
+.card{
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.btn{
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+transform:scale(1.05);
+
+}
+
+img{
+
+transition:.3s;
+
+}
+
+img:hover{
+
+transform:scale(1.05);
+
+}
+.card{
+
+    border-radius:20px;
+
+}
+
+.alert-success{
+
+    background:#e8f8ec;
+
+    color:#198754;
+
+}
+
+.btn-success{
+
+    border-radius:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-success:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 20px rgba(25,135,84,.3);
+
+}
+/* ============================
+   BACK BUTTON
+============================ */
+
+.back-page-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    background: white;
+    color: #198754;
+
+    border: 1px solid #198754;
+    border-radius: 30px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+    transition: all 0.2s ease;
+}
+
+.back-page-btn:hover {
+    background: #198754;
+    color: white;
+    transform: translateX(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+.back-page-btn i {
+    font-size: 15px;
+}
+
+/* ==========================================
+   PRIORITY PRODUCT
+   ========================================== */
+
+.priority-product {
+    border: 3px solid #16a34a !important;
+    background: #ecfdf5;
+    box-shadow: 0 10px 30px rgba(22, 163, 74, 0.25) !important;
+    position: relative;
+}
+
+.priority-product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 18px 40px rgba(22, 163, 74, 0.35) !important;
+}
+
+.priority-product .card-body {
+    background: #ecfdf5;
+}
+
+.priority-product h5 {
+    color: #15803d;
+}
+
+.priority-badge {
+    background: #16a34a;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    padding: 8px 12px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+/* ================= AI ASSISTANT ================= */
+
+#aiButton {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #198754;
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+
+    z-index: 9999;
+}
+
+.ai-assistant {
+    position: fixed;
+
+    right: 25px;
+    bottom: 95px;
+
+    width: 380px;
+    max-width: calc(100vw - 40px);
+
+    height: 500px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+
+    display: none;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    z-index: 9999;
+}
+
+.ai-header {
+    background: #198754;
+    color: white;
+
+    padding: 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 18px;
+}
+
+.ai-header button {
+    border: none;
+    background: transparent;
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.ai-messages {
+    flex: 1;
+
+    padding: 15px;
+
+    overflow-y: auto;
+
+    background: #f8f9fa;
+}
+
+.ai-message {
+    padding: 10px 14px;
+
+    margin-bottom: 10px;
+
+    border-radius: 12px;
+
+    max-width: 85%;
+
+    line-height: 1.4;
+}
+
+.ai-message.bot {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.ai-message.user {
+    background: #198754;
+    color: white;
+
+    margin-left: auto;
+}
+
+.ai-input-area {
+    display: flex;
+
+    padding: 10px;
+
+    border-top: 1px solid #ddd;
+
+    background: white;
+}
+
+.ai-input-area input {
+    flex: 1;
+
+    border: 1px solid #ccc;
+
+    border-radius: 10px;
+
+    padding: 10px;
+}
+
+.ai-input-area button {
+    margin-left: 8px;
+
+    width: 45px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #198754;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}

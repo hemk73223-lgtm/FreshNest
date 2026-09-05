@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Warehouse Management System - Login</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Your Existing CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+<header class="topbar">
+
+    <div class="topbar-left">
+
+        <div class="brand">
+
+            <span class="brand-mark">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </span>
+
+            <span class="brand-name">
+                FreshNest
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="topbar-right">
+
+        <div class="dash-utility">
+
+            <div class="utility-item">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <span id="liveDateText">--</span>
+
+            </div>
+
+            <div class="utility-item">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <span id="liveTimeText">--</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+<!-- ================= LOGIN ================= -->
+
+<main class="signin-wrap">
+
+    <section class="view active">
+
+    <div class="panel glass-card" style="max-width:500px;margin:60px auto;">
+
+        <div class="login-container">
+
+<div class="login-card">
+
+<h1>Welcome Back</h1>
+
+<p class="subtitle">
+Login to continue to FreshNest
+</p>
+
+<div class="form-group">
+
+<label>Username</label>
+
+<input
+type="text"
+id="username"
+class="form-input"
+placeholder="Enter Username">
+
+</div>
+
+<div class="form-group">
+
+<label>Password</label>
+
+<div class="password-wrap">
+
+<input
+type="password"
+id="password"
+class="form-input"
+placeholder="Enter Password">
+
+<button
+type="button"
+id="togglePassword"
+class="pw-toggle">
+
+<i class="fa-solid fa-eye"></i>
+
+</button>
+
+</div>
+
+</div>
+
+<div class="remember-row">
+
+<label>
+
+<input type="checkbox">
+
+ Remember Me
+
+</label>
+
+<a href="#">
+Forgot Password?
+</a>
+
+</div>
+
+<button
+class="login-btn"
+id="loginBtn">
+
+<i class="fa-solid fa-right-to-bracket"></i>
+
+ Login
+
+</button>
+
+<div class="bottom">
+
+Don't have an account?
+
+<a href="signin.html">
+
+Sign Up
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<!-- Firebase Config -->
+<script src="../admin/firebase-config.js"></script>
+
+<!-- Login JS -->
+<script src="login.js"></script>
+<div
+    class="loading-overlay"
+    id="loadingOverlay">
+
+    <div class="loading-spinner"></div>
+
+    <p>Logging in...</p>
+
+</div>
+</body>
+</html>

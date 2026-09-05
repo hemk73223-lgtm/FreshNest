@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Warehouse Management System — Sign In</title>
+
+<!-- Font Awesome (same as dashboard) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<!-- Fonts: Space Grotesk / Inter / JetBrains Mono (same as dashboard) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- Existing dashboard design system (tokens + base components) -->
+<link rel="stylesheet" href="style.css" />
+<!-- New sign-in specific additions only -->
+<link rel="stylesheet" href="signin.css" />
+</head>
+<body class="signin-body">
+
+<!-- ============ HEADER (same brand as dashboard) ============ -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="brand">
+      <span class="brand-mark"><i class="fa-solid fa-basket-shopping"></i></span>
+      <span class="brand-name">FreshNest</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="dash-utility" id="dashUtility">
+      <div class="utility-item" id="liveDateItem">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span id="liveDateText">--</span>
+      </div>
+      <div class="utility-item" id="liveTimeItem">
+        <i class="fa-solid fa-clock"></i>
+        <span id="liveTimeText">--</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="signin-wrap">
+
+  <!-- ============ STEP PROGRESS ============ -->
+  <div class="wizard-head" id="wizardHead">
+    <h1>Create Your Account</h1>
+    <p class="view-sub">Set up warehouse access in a few quick steps.</p>
+
+    <div class="stepper" id="stepper">
+      <div class="step active" data-step="1">
+        <span class="step-dot">1</span><span class="step-label">User Info</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2">
+        <span class="step-dot">2</span><span class="step-label">Address</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3">
+        <span class="step-dot">3</span><span class="step-label">Password</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 1: USER INFORMATION ============ -->
+  <section class="view active wizard-section" id="section-account">
+    <div class="panel glass-card">
+      <h2 class="panel-title"><i class="fa-solid fa-id-card"></i> User Information</h2>
+
+      <div class="form-group">
+        <label for="fUsername">Username</label>
+        <input type="text" id="fUsername" class="form-input" placeholder="Enter Username" autocomplete="off" />
+        <span class="field-error" id="err-fUsername"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="fDob">Date of Birth</label>
+        <input type="date" id="fDob" class="form-input" />
+        <span class="field-error" id="err-fDob"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="fPhone">Phone Number</label>
+        <div class="phone-row">
+          <div class="country-select" id="countrySelect">
+            <button type="button" class="country-trigger" id="countryTrigger">
+              <span id="countryFlag">🇮🇳</span><span id="countryCode">+91</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="country-dropdown" id="countryDropdown">
+              <div class="country-option" data-flag="🇮🇳" data-code="+91"><span>🇮🇳</span> India <span class="opt-code">+91</span></div>
+              
+            </div>
+          </div>
+          <input type="tel" id="fPhone" class="form-input phone-input" placeholder="Phone number" autocomplete="off" />
+          <button type="button" class="btn btn-primary" id="verifyBtn">Verify</button>
+        </div>
+        <span class="field-error" id="err-fPhone"></span>
+        <span class="user-status-msg" id="userStatusMsg"></span>
+      </div>
+
+      <div class="wizard-actions">
+        <span></span>
+        <button type="button" class="btn btn-primary" id="toAddressBtn">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: ADDRESS ============ -->
+  <section class="view wizard-section" id="section-address">
+    <div class="panel glass-card">
+      <h2 class="panel-title"><i class="fa-solid fa-location-dot"></i> Address</h2>
+
+      <div class="form-group">
+        <label for="fStreet">Street Name with House Number</label>
+        <input type="text" id="fStreet" class="form-input" placeholder="e.g. 24, Anna Nagar 4th Street" />
+        <span class="field-error" id="err-fStreet"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="fLandmark">Landmark</label>
+        <input type="text" id="fLandmark" class="form-input" placeholder="Nearby landmark" />
+        <span class="field-error" id="err-fLandmark"></span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group autocomplete-wrap">
+          <label for="fDistrict">District</label>
+          <input type="text" id="fDistrict" class="form-input" placeholder="Start typing district" autocomplete="off" />
+          <div class="autocomplete-list" id="districtList"></div>
+          <span class="field-error" id="err-fDistrict"></span>
+        </div>
+        <div class="form-group">
+          <label for="fPincode">Pincode</label>
+          <input type="text" id="fPincode" class="form-input" placeholder="6-digit pincode" inputmode="numeric" maxlength="6" />
+          <span class="field-error" id="err-fPincode"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fState">State</label>
+          <input type="text" id="fState" class="form-input" placeholder="Auto-filled from district" readonly />
+        </div>
+        <div class="form-group">
+          <label for="fCountry">Country</label>
+          <input type="text" id="fCountry" class="form-input" placeholder="Auto-filled from district" readonly />
+        </div>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn-ghost" id="addrPrevBtn"><i class="fa-solid fa-arrow-left"></i> Previous Section</button>
+        <div class="wizard-actions-right">
+          <button type="button" class="btn btn-ghost" id="saveAddressBtn"><i class="fa-solid fa-floppy-disk"></i> Save Address</button>
+          <button type="button" class="btn btn-primary" id="toPasswordBtn">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: CREATE PASSWORD ============ -->
+  <section class="view wizard-section" id="section-password">
+    <div class="panel glass-card">
+      <h2 class="panel-title"><i class="fa-solid fa-lock"></i> Create Password</h2>
+
+      <div class="form-group">
+        <label for="fPassword">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="fPassword" class="form-input" placeholder="Create a password" autocomplete="new-password" />
+          <button type="button" class="pw-toggle" data-target="fPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+        </div>
+        <div class="strength-meter" id="strengthMeter">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="strength-label" id="strengthLabel">&nbsp;</span>
+        <span class="field-error" id="err-fPassword"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="fConfirmPassword">Confirm Password</label>
+        <div class="password-wrap">
+          <input type="password" id="fConfirmPassword" class="form-input" placeholder="Re-enter password" autocomplete="new-password" />
+          <button type="button" class="pw-toggle" data-target="fConfirmPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+        </div>
+        <span class="field-error" id="err-fConfirmPassword"></span>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn-ghost" id="pwPrevBtn"><i class="fa-solid fa-arrow-left"></i> Previous Section</button>
+        <button type="button" class="btn btn-primary" id="submitBtn">Submit <i class="fa-solid fa-check"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROFILE PAGE ============ -->
+  <section class="view wizard-section" id="section-profile">
+    <div class="view-head with-back">
+      <div><h1>Profile</h1><p class="view-sub">Your account has been created successfully.</p></div>
+      <button class="back-btn" id="profileBackBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    </div>
+    <div class="panel profile-panel profile-panel-wide glass-card">
+      <img id="profileAvatar" src="" alt="Profile avatar" class="profile-photo" />
+      <div class="profile-fields">
+        <div class="profile-field"><span class="pf-label">Name</span><span class="pf-value" id="pfName">—</span></div>
+        <div class="profile-field"><span class="pf-label">Date of Birth</span><span class="pf-value" id="pfDob">—</span></div>
+        <div class="profile-field"><span class="pf-label">Phone</span><span class="pf-value" id="pfPhone">—</span></div>
+        <div class="profile-field"><span class="pf-label">Street</span><span class="pf-value" id="pfStreet">—</span></div>
+        <div class="profile-field"><span class="pf-label">Landmark</span><span class="pf-value" id="pfLandmark">—</span></div>
+        <div class="profile-field"><span class="pf-label">District</span><span class="pf-value" id="pfDistrict">—</span></div>
+        <div class="profile-field"><span class="pf-label">Pincode</span><span class="pf-value" id="pfPincode">—</span></div>
+        <div class="profile-field"><span class="pf-label">State</span><span class="pf-value" id="pfState">—</span></div>
+        <div class="profile-field"><span class="pf-label">Country</span><span class="pf-value" id="pfCountry">—</span></div>
+        <div class="profile-field"><span class="pf-label">Password</span><span class="pf-value" id="pfPassword">••••••••</span></div>
+      </div>
+    </div>
+    <div class="wizard-actions profile-login-row">
+      <span></span>
+      <button type="button" class="btn btn-primary" id="loginBtn">Log In <i class="fa-solid fa-right-to-bracket"></i></button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ OTP MODAL ============ -->
+<div class="modal-overlay" id="otpOverlay">
+  <div class="modal-card glass-card">
+
+    <div class="modal-head">
+      <h2><i class="fa-solid fa-shield-halved"></i> OTP Verification</h2>
+      <button class="icon-btn icon-btn-sm" id="otpClose" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <p class="view-sub">
+      Enter the 6-digit code sent to
+      <span id="otpPhoneDisplay">your phone</span>
+    </p>
+
+    <div class="otp-boxes" id="otpBoxes">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="0">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="1">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="2">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="3">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="4">
+      <input type="text" inputmode="numeric" maxlength="1" class="otp-box" data-idx="5">
+    </div>
+
+    <span class="field-error" id="err-otp"></span>
+
+    <div class="otp-timer-row">
+      <span class="otp-timer" id="otpTimer">00:30</span>
+      <button type="button" class="text-btn" id="resendOtpBtn" disabled>
+        Resend OTP
+      </button>
+    </div>
+
+    <button type="button" class="btn btn-primary otp-submit" id="otpSubmitBtn">
+      Submit
+    </button>
+
+  </div>
+</div>
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <p>Creating your profile...</p>
+</div>
+
+<!-- toast (same component as dashboard) -->
+<div class="toast" id="toast"></div>
+<div id="recaptcha-container"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<!-- Your Firebase Config -->
+<script src="firebase-config.js"></script>
+
+<!-- Your Signin Logic -->
+<script src="signin.js"></script>
+</body>
+</html>
