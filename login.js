@@ -90,24 +90,20 @@ try {
     let userFound = false;
 
     snapshot.forEach((doc) => {
+    const data = doc.data();
 
-        const data = doc.data();
+    if (
+        data.username === username &&
+        data.password === password
+    ) {
+        userFound = true;
 
-        console.log(data);
-
-        if (
-            data.username === username &&
-            data.password === password
-        ) {
-
-            userFound = true;
-
-            localStorage.setItem("userId", doc.id);
-            localStorage.setItem("username", data.username);
-
-        }
-
-    });
+        // Save the CURRENT user's ID
+        localStorage.setItem("userId", doc.id);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("userName", data.username);
+    }
+});
 
     if (userFound) {
 
