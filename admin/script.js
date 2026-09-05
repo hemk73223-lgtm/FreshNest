@@ -2558,3 +2558,10 @@ renderDashboardPie();
   console.log(firebase);
   document.addEventListener("DOMContentLoaded", init);
 })();
+function adminLogout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userName");
+
+    window.location.href = "../index.html";
+}
